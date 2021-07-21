@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style type="text/css">
+        #table-rodape {
+            font-family: 'Arial';
+            font-size: 20px;
+            color: #86000D;
+            font-weight: bold;
+            float: right;
+        }
+
+        .branco {
+            background-color: white !important;
+        }
+
+        .cabecalho {
+            font-family: 'Arial';
+            font-size: 20px;
+            text-align: center;
+            color: #86000D;
+            font-weight: bold;
+        }
+
+        hr {
+            width: 100%;
+            border-color: #86000D;
+            border-width: 2px;
+            border-style: solid;
+            margin: 0 auto;
+        }
+
+        @@media print {
+            page {
+                page-break-after: always;
+            }
+        }
+
+        table {
+            width: 100%;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tfoot {
+            display: table-row-group;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+    </style>
+    <script src="~/scripts/jquery-1.10.2.min.js"></script>
+
+</head>
+<body style="overflow:hidden;margin:0;padding:0;" onload="">
+    <table id="table-rodape">
+        <tr class="branco">
+            <td>
+                <img src="~/Imagens\Apolice_Individual\logo_left.png" />
+            </td>
+            <td align="center">
+                <br /><span>APÓLICE DE SEGURO</span>
+            </td>
+            <td>
+                <img style="float:right;  width:209px; height:60px;" src="~/Imagens/Apolice_Individual/logo_right.jpg" />
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td colspan="2" align="right" style="float:right; color: #86000D;font-family:'Arial Narrow'; font-size:16px;">
+                @DateTime.Now.ToString("dd/MM/yyyy HH:mm tt")&nbsp;&nbsp;
+                Página <span class="page"></span>/<span class="topage"></span>
+            </td>
+        </tr>
+        <tr class="branco">
+            <td>
+                <hr />
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            subst();
+        });
+
+        function subst() {
+            var vars = {};
+            var x = document.location.search.substring(1).split('&');
+            for (var i in x) {
+                var z = x[i].split('=', 2); vars[z[0]] = unescape(z[1]);
+            }
+            var x = ['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+
+
+            for (var i in x) {
+                var y = document.getElementsByClassName(x[i]);
+                for (var j = 0; j < y.length; ++j)
+                    y[j].textContent = vars[x[i]];
+            }
+
+            if (vars[x[0]] != vars[x[2]]) {
+                document.getElementById('container').setAttribute('style', 'display:none').style.height = '0px';
+            }
+        }
+    </script>
+
+</body>
+</html>
